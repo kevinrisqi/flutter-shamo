@@ -1,6 +1,6 @@
 import 'package:flutter/material.dart';
-import 'package:google_fonts/google_fonts.dart';
-import 'package:shamo_flutter/theme.dart';
+import 'package:shamo_flutter/pages/sign_in_page.dart';
+import 'package:shamo_flutter/pages/splash_page.dart';
 
 void main() {
   runApp(const MyApp());
@@ -13,32 +13,10 @@ class MyApp extends StatelessWidget {
   Widget build(BuildContext context) {
     return MaterialApp(
       debugShowCheckedModeBanner: false,
-      home: HomePage(),
-    );
-  }
-}
-
-class HomePage extends StatelessWidget {
-  @override
-  Widget build(BuildContext context) {
-    return Scaffold(
-      body: SafeArea(
-        child: Column(
-          children: [
-            Image.asset(
-              'assets/images_logo.png',
-              width: 40,
-            ),
-            Text(
-              'Sabrina Carpenter',
-              style: secondaryTextStyle.copyWith(
-                fontSize: 30,
-                fontWeight: light,
-              ),
-            )
-          ],
-        ),
-      ),
+      routes: {
+        '/': (context) => SplashPage(),
+        '/sign-in': (context) => SignInPage()
+      },
     );
   }
 }
