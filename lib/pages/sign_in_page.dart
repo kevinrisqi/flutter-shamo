@@ -8,6 +8,7 @@ class SignInPage extends StatelessWidget {
   Widget build(BuildContext context) {
     return Scaffold(
       backgroundColor: bgColor1,
+      resizeToAvoidBottomInset: false,
       body: SafeArea(
         child: Container(
           margin: EdgeInsets.symmetric(
@@ -21,9 +22,124 @@ class SignInPage extends StatelessWidget {
                 height: 70,
               ),
               emailInput(),
+              SizedBox(
+                height: 20,
+              ),
+              passwordInput(),
+              SizedBox(
+                height: defaultMargin,
+              ),
+              signInButton(),
+              Spacer(),
+              footer(),
             ],
           ),
         ),
+      ),
+    );
+  }
+}
+
+Widget footer() {
+  return Container(
+    margin: EdgeInsets.only(bottom: 30),
+    child: Row(
+      mainAxisAlignment: MainAxisAlignment.center,
+      children: [
+        Text(
+          'Don\'t have an account? ',
+          style: subtitleTextStyle.copyWith(
+            fontSize: 12,
+          ),
+        ),
+        Text(
+          'Sign Up',
+          style: purpleTextStyle.copyWith(
+            fontSize: 12,
+            fontWeight: medium,
+          ),
+        )
+      ],
+    ),
+  );
+}
+
+Widget signInButton() {
+  return Container(
+    width: double.infinity,
+    height: 50,
+    decoration: BoxDecoration(
+      borderRadius: BorderRadius.circular(12),
+      color: primaryColor,
+    ),
+    child: TextButton(
+      onPressed: () {},
+      child: Text(
+        'Sign In',
+        style: primaryTextStyle.copyWith(
+          fontSize: 16,
+          fontWeight: medium,
+        ),
+      ),
+    ),
+  );
+}
+
+class passwordInput extends StatelessWidget {
+  const passwordInput({
+    Key? key,
+  }) : super(key: key);
+
+  @override
+  Widget build(BuildContext context) {
+    return Container(
+      child: Column(
+        crossAxisAlignment: CrossAxisAlignment.start,
+        children: [
+          Text(
+            'Password',
+            style: primaryTextStyle.copyWith(
+              fontSize: 16,
+              fontWeight: medium,
+            ),
+          ),
+          SizedBox(
+            height: 12,
+          ),
+          Container(
+            height: 50,
+            padding: EdgeInsets.symmetric(
+              horizontal: 16,
+            ),
+            decoration: BoxDecoration(
+              color: bgColor2,
+              borderRadius: BorderRadius.circular(12),
+            ),
+            child: Center(
+              child: Row(
+                children: [
+                  Image.asset(
+                    'assets/icon_password.png',
+                    width: 17,
+                  ),
+                  SizedBox(
+                    width: 16,
+                  ),
+                  Expanded(
+                    child: TextFormField(
+                      style: primaryTextStyle,
+                      obscureText: true,
+                      decoration: InputDecoration.collapsed(
+                        hintText: 'Your Password',
+                        hintStyle: subtitleTextStyle,
+                      ),
+                    ),
+                  ),
+                ],
+              ),
+            ),
+          )
+        ],
       ),
     );
   }
@@ -66,8 +182,18 @@ class emailInput extends StatelessWidget {
                     'assets/icon_email.png',
                     width: 17,
                   ),
-                  SizedBox(width: 16,),
-                  
+                  SizedBox(
+                    width: 16,
+                  ),
+                  Expanded(
+                    child: TextFormField(
+                      style: primaryTextStyle,
+                      decoration: InputDecoration.collapsed(
+                        hintText: 'Your Email Address',
+                        hintStyle: subtitleTextStyle,
+                      ),
+                    ),
+                  ),
                 ],
               ),
             ),
