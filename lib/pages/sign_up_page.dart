@@ -37,7 +37,7 @@ class SignUpPage extends StatelessWidget {
               SizedBox(
                 height: defaultMargin,
               ),
-              signInButton(),
+              signInButton(context),
               Spacer(),
               footer(context),
             ],
@@ -75,7 +75,7 @@ Widget footer(BuildContext context) {
   );
 }
 
-Widget signInButton() {
+Widget signInButton(BuildContext context) {
   return Container(
     width: double.infinity,
     height: 50,
@@ -84,7 +84,9 @@ Widget signInButton() {
       color: primaryColor,
     ),
     child: TextButton(
-      onPressed: () {},
+      onPressed: () {
+        Navigator.pushNamed(context, '/home');
+      },
       child: Text(
         'Sign Up',
         style: primaryTextStyle.copyWith(
