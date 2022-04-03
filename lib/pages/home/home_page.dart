@@ -26,7 +26,11 @@ class popularProduct extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     return Container(
-      margin: EdgeInsets.only(top: 14),
+      margin: EdgeInsets.only(
+        top: 14,
+        right: defaultMargin,
+        left: defaultMargin,
+      ),
       child: SingleChildScrollView(
         scrollDirection: Axis.horizontal,
         child: Row(
@@ -47,11 +51,18 @@ class popularProductTitle extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
-    return Text(
-      'Popular Products',
-      style: primaryTextStyle.copyWith(
-        fontSize: 22,
-        fontWeight: semiBold,
+    return Padding(
+      padding: EdgeInsets.only(
+        top: defaultMargin,
+        right: defaultMargin,
+        left: defaultMargin,
+      ),
+      child: Text(
+        'Popular Products',
+        style: primaryTextStyle.copyWith(
+          fontSize: 22,
+          fontWeight: semiBold,
+        ),
       ),
     );
   }
@@ -189,13 +200,11 @@ class header extends StatelessWidget {
           Column(
             crossAxisAlignment: CrossAxisAlignment.start,
             children: [
-              Expanded(
-                child: Text(
-                  'Hello, Alex',
-                  style: primaryTextStyle.copyWith(
-                    fontSize: 24,
-                    fontWeight: semiBold,
-                  ),
+              Text(
+                'Hello, Alex',
+                style: primaryTextStyle.copyWith(
+                  fontSize: 24,
+                  fontWeight: semiBold,
                 ),
               ),
               Text(
