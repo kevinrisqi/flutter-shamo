@@ -16,6 +16,10 @@ class SignInPage extends StatelessWidget {
           child: Column(
             children: [
               header(),
+              SizedBox(
+                height: 70,
+              ),
+              body()
             ],
           ),
         ),
@@ -24,7 +28,26 @@ class SignInPage extends StatelessWidget {
   }
 }
 
+class body extends StatelessWidget {
+
+  @override
+  Widget build(BuildContext context) {
+    return Column(
+      children: [
+        Text(
+          'Email Address',
+          style: primaryTextStyle.copyWith(
+            fontSize: 16,
+            fontWeight: medium,
+          ),
+        ),
+      ],
+    );
+  }
+}
+
 class header extends StatelessWidget {
+  
   @override
   Widget build(BuildContext context) {
     return Container(
@@ -40,6 +63,9 @@ class header extends StatelessWidget {
               fontWeight: semiBold,
               fontSize: 24,
             ),
+          ),
+          SizedBox(
+            height: 2,
           ),
           Text(
             'Sign In to Continue',
