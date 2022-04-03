@@ -28,13 +28,13 @@ class popularProduct extends StatelessWidget {
     return Container(
       margin: EdgeInsets.only(
         top: 14,
-        right: defaultMargin,
         left: defaultMargin,
       ),
       child: SingleChildScrollView(
         scrollDirection: Axis.horizontal,
         child: Row(
           children: [
+            ProductCard(),
             ProductCard(),
             ProductCard(),
           ],
@@ -76,9 +76,7 @@ class categories extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     return Container(
-      margin: EdgeInsets.symmetric(
-        horizontal: defaultMargin,
-      ),
+      margin: EdgeInsets.only(left: defaultMargin),
       child: SingleChildScrollView(
         scrollDirection: Axis.horizontal,
         child: Row(
@@ -197,21 +195,23 @@ class header extends StatelessWidget {
         crossAxisAlignment: CrossAxisAlignment.start,
         mainAxisAlignment: MainAxisAlignment.spaceBetween,
         children: [
-          Column(
-            crossAxisAlignment: CrossAxisAlignment.start,
-            children: [
-              Text(
-                'Hello, Alex',
-                style: primaryTextStyle.copyWith(
-                  fontSize: 24,
-                  fontWeight: semiBold,
+          Expanded(
+            child: Column(
+              crossAxisAlignment: CrossAxisAlignment.start,
+              children: [
+                Text(
+                  'Hello, Alexa',
+                  style: primaryTextStyle.copyWith(
+                    fontSize: 24,
+                    fontWeight: semiBold,
+                  ),
                 ),
-              ),
-              Text(
-                '@alexkeinn',
-                style: subtitleTextStyle.copyWith(fontSize: 16),
-              ),
-            ],
+                Text(
+                  '@alexkeinn',
+                  style: subtitleTextStyle.copyWith(fontSize: 16),
+                ),
+              ],
+            ),
           ),
           Container(
             width: 54,
