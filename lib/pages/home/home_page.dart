@@ -1,6 +1,7 @@
 import 'package:flutter/material.dart';
 import 'package:shamo_flutter/theme.dart';
 import 'package:shamo_flutter/widgets/product_card.dart';
+import 'package:shamo_flutter/widgets/product_tile.dart';
 
 class HomePage extends StatelessWidget {
   const HomePage({Key? key}) : super(key: key);
@@ -12,8 +13,36 @@ class HomePage extends StatelessWidget {
         header(),
         categories(),
         popularProductTitle(),
-        popularProduct()
+        popularProduct(),
+        newArrivalTitle(),
+        newArrivals(),
       ],
+    );
+  }
+}
+
+class newArrivals extends StatelessWidget {
+  const newArrivals({
+    Key? key,
+  }) : super(key: key);
+
+  @override
+  Widget build(BuildContext context) {
+    return Container(
+      margin: EdgeInsets.only(
+        top: 14,
+        left: defaultMargin,
+        right: defaultMargin,
+        bottom: defaultMargin,
+      ),
+      child: Column(
+        children: [
+          ProductTile(),
+          ProductTile(),
+          ProductTile(),
+          ProductTile(),
+        ],
+      ),
     );
   }
 }
@@ -59,6 +88,30 @@ class popularProductTitle extends StatelessWidget {
       ),
       child: Text(
         'Popular Products',
+        style: primaryTextStyle.copyWith(
+          fontSize: 22,
+          fontWeight: semiBold,
+        ),
+      ),
+    );
+  }
+}
+
+class newArrivalTitle extends StatelessWidget {
+  const newArrivalTitle({
+    Key? key,
+  }) : super(key: key);
+
+  @override
+  Widget build(BuildContext context) {
+    return Padding(
+      padding: EdgeInsets.only(
+        top: defaultMargin,
+        right: defaultMargin,
+        left: defaultMargin,
+      ),
+      child: Text(
+        'New Arrivals',
         style: primaryTextStyle.copyWith(
           fontSize: 22,
           fontWeight: semiBold,

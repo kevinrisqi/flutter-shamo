@@ -21,7 +21,6 @@ class SignInPage extends StatelessWidget {
               SizedBox(
                 height: 70,
               ),
-              body(),
               emailInput(),
               SizedBox(
                 height: 20,
