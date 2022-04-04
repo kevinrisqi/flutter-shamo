@@ -126,7 +126,7 @@ class productPreview extends StatelessWidget {
             height: 21,
           ),
           Row(
-            mainAxisAlignment: MainAxisAlignment.center,
+            mainAxisAlignment: MainAxisAlignment.spaceEvenly,
             children: [
               TextButton(
                 onPressed: () {},
