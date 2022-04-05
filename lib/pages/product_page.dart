@@ -1,6 +1,9 @@
+import 'dart:ffi';
+
 import 'package:carousel_slider/carousel_slider.dart';
 import 'package:flutter/material.dart';
 import 'package:shamo_flutter/theme.dart';
+import 'package:shamo_flutter/widgets/familiar_shoes_card.dart';
 
 class ProductPage extends StatefulWidget {
   ProductPage({Key? key}) : super(key: key);
@@ -16,11 +19,103 @@ class _ProductPageState extends State<ProductPage> {
     'assets/image_new_arrival3.png',
   ];
 
+  final List familiarShoes = [
+    'assets/image_new_arrival3.png',
+    'assets/image_new_arrival3.png',
+    'assets/image_new_arrival3.png',
+    'assets/image_new_arrival3.png',
+    'assets/image_new_arrival3.png',
+    'assets/image_new_arrival3.png',
+    'assets/image_new_arrival3.png',
+    'assets/image_new_arrival3.png',
+    'assets/image_new_arrival3.png',
+  ];
+
   int currentIndex = 0;
+  bool isWishlist = false;
 
   @override
   Widget build(BuildContext context) {
     int index = -1;
+    // int indexShoes = 0;
+
+    Future<void> showSuccessDialog() async {
+      return showDialog(
+        context: context,
+        builder: (BuildContext context) => Container(
+          width: MediaQuery.of(context).size.width - 2 * defaultMargin,
+          child: AlertDialog(
+            backgroundColor: bgColor3,
+            shape: RoundedRectangleBorder(
+              borderRadius: BorderRadius.circular(30),
+            ),
+            content: SingleChildScrollView(
+              child: Column(
+                children: [
+                  Align(
+                    alignment: Alignment.centerLeft,
+                    child: GestureDetector(
+                      onTap: () {
+                        Navigator.pop(context);
+                      },
+                      child: Icon(
+                        Icons.close,
+                        color: primaryColorText,
+                      ),
+                    ),
+                  ),
+                  Image.asset(
+                    'assets/icon_success.png',
+                    width: 100,
+                  ),
+                  SizedBox(
+                    height: 12,
+                  ),
+                  Text(
+                    'Hurray :)',
+                    style: primaryTextStyle.copyWith(
+                      fontSize: 18,
+                      fontWeight: semiBold,
+                    ),
+                  ),
+                  SizedBox(
+                    height: 12,
+                  ),
+                  Text(
+                    'Item Added Succesfully',
+                    style: secondaryTextStyle,
+                  ),
+                  SizedBox(
+                    height: 20,
+                  ),
+                  Container(
+                    width:
+                        MediaQuery.of(context).size.width - 8 * defaultMargin,
+                    height: 44,
+                    child: TextButton(
+                      onPressed: () {},
+                      style: TextButton.styleFrom(
+                        backgroundColor: primaryColor,
+                        shape: RoundedRectangleBorder(
+                          borderRadius: BorderRadius.circular(12),
+                        ),
+                      ),
+                      child: Text(
+                        'View My Cart',
+                        style: primaryTextStyle.copyWith(
+                          fontSize: 16,
+                          fontWeight: medium,
+                        ),
+                      ),
+                    ),
+                  ),
+                ],
+              ),
+            ),
+          ),
+        ),
+      );
+    }
 
     Widget indicator(int index) {
       return Container(
@@ -42,8 +137,8 @@ class _ProductPageState extends State<ProductPage> {
           Container(
             margin: EdgeInsets.only(
               top: 20,
-              left: defaultMargin,
-              right: defaultMargin,
+              left: 20,
+              right: 20,
             ),
             child: Row(
               mainAxisAlignment: MainAxisAlignment.spaceBetween,
@@ -54,6 +149,7 @@ class _ProductPageState extends State<ProductPage> {
                   },
                   child: Icon(
                     Icons.chevron_left,
+                    size: 32,
                   ),
                 ),
                 Icon(
@@ -111,6 +207,7 @@ class _ProductPageState extends State<ProductPage> {
         child: Container(
           margin: EdgeInsets.all(defaultMargin),
           child: Column(
+            crossAxisAlignment: CrossAxisAlignment.start,
             children: [
               Row(
                 children: [
@@ -134,9 +231,49 @@ class _ProductPageState extends State<ProductPage> {
                       ],
                     ),
                   ),
-                  Image.asset(
-                    'assets/button_wishlist_grey.png',
-                    width: 46,
+                  GestureDetector(
+                    onTap: () {
+                      setState(() {
+                        isWishlist = !isWishlist;
+                        if (isWishlist) {
+                          ScaffoldMessenger.of(context).showSnackBar(
+                            SnackBar(
+                              shape: RoundedRectangleBorder(
+                                borderRadius: BorderRadius.vertical(
+                                  top: Radius.circular(12),
+                                ),
+                              ),
+                              backgroundColor: secondaryColor,
+                              content: Text(
+                                'Has been added to the Wishlist',
+                                textAlign: TextAlign.center,
+                              ),
+                            ),
+                          );
+                        } else {
+                          ScaffoldMessenger.of(context).showSnackBar(
+                            SnackBar(
+                              shape: RoundedRectangleBorder(
+                                borderRadius: BorderRadius.vertical(
+                                  top: Radius.circular(12),
+                                ),
+                              ),
+                              backgroundColor: alertColor,
+                              content: Text(
+                                'Has been removed from the Wishlist',
+                                textAlign: TextAlign.center,
+                              ),
+                            ),
+                          );
+                        }
+                      });
+                    },
+                    child: Image.asset(
+                      isWishlist
+                          ? 'assets/button_wishlist.png'
+                          : 'assets/button_wishlist_grey.png',
+                      width: 46,
+                    ),
                   ),
                 ],
               ),
@@ -167,6 +304,88 @@ class _ProductPageState extends State<ProductPage> {
                     )
                   ],
                 ),
+              ),
+              SizedBox(
+                height: 20,
+              ),
+              Text(
+                'Description',
+                style: primaryTextStyle.copyWith(fontWeight: medium),
+              ),
+              SizedBox(
+                height: 12,
+              ),
+              Text(
+                'Unpaved trails and mixed surfaces are easy \nwhen you have the traction and support you \nneed. Casual enough for the daily commute.',
+                style: subtitleTextStyle.copyWith(
+                  fontWeight: light,
+                ),
+              ),
+              SizedBox(
+                height: defaultMargin,
+              ),
+              Text(
+                'Familiar Shoes',
+                style: primaryTextStyle.copyWith(
+                  fontWeight: medium,
+                ),
+              ),
+              SizedBox(
+                height: 12,
+              ),
+              SingleChildScrollView(
+                scrollDirection: Axis.horizontal,
+                child: Row(
+                  children: familiarShoes.map((e) {
+                    // print(familiarShoes.length);
+                    // indexShoes++;
+                    // print('index: $indexShoes');
+                    return Container(
+                      margin: EdgeInsets.only(right: 16),
+                      child: FamiliarShoesCard(imageUrl: e),
+                    );
+                  }).toList(),
+                ),
+              ),
+              SizedBox(
+                height: defaultMargin,
+              ),
+              Row(
+                children: [
+                  GestureDetector(
+                    onTap: () {
+                      Navigator.pushNamed(context, '/detail-chat');
+                    },
+                    child: Image.asset(
+                      'assets/button_chat.png',
+                      width: 54,
+                    ),
+                  ),
+                  SizedBox(
+                    width: 16,
+                  ),
+                  Expanded(
+                    child: Container(
+                      height: 54,
+                      child: TextButton(
+                        onPressed: () {
+                          showSuccessDialog();
+                        },
+                        style: TextButton.styleFrom(
+                          backgroundColor: primaryColor,
+                          shape: RoundedRectangleBorder(
+                            borderRadius: BorderRadius.circular(12),
+                          ),
+                        ),
+                        child: Text(
+                          'Add to Cart',
+                          style: primaryTextStyle.copyWith(
+                              fontSize: 16, fontWeight: semiBold),
+                        ),
+                      ),
+                    ),
+                  ),
+                ],
               )
             ],
           ),
