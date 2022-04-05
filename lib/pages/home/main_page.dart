@@ -19,9 +19,14 @@ class _MainPageState extends State<MainPage> {
     return FloatingActionButton(
       onPressed: () {},
       backgroundColor: secondaryColor,
-      child: Image.asset(
-        'assets/icon_cart.png',
-        width: 20,
+      child: GestureDetector(
+        onTap: () {
+          Navigator.pushNamed(context, '/cart');
+        },
+        child: Image.asset(
+          'assets/icon_cart.png',
+          width: 20,
+        ),
       ),
     );
   }
