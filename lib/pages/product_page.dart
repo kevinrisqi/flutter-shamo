@@ -36,9 +36,8 @@ class _ProductPageState extends State<ProductPage> {
       );
     }
 
-    return Scaffold(
-      backgroundColor: bgColor6,
-      body: Column(
+    Widget header() {
+      return Column(
         children: [
           Container(
             margin: EdgeInsets.only(
@@ -80,8 +79,8 @@ class _ProductPageState extends State<ProductPage> {
                 onPageChanged: (index, reason) {
                   setState(() {
                     currentIndex = index;
-                    print('index: $index');
-                    print('currentIndex: $currentIndex');
+                    // print('index: $index');
+                    // print('currentIndex: $currentIndex');
                   });
                 }),
           ),
@@ -95,6 +94,92 @@ class _ProductPageState extends State<ProductPage> {
               return indicator(index);
             }).toList(),
           )
+        ],
+      );
+    }
+
+    Widget content() {
+      return Container(
+        width: double.infinity,
+        margin: EdgeInsets.only(top: 17),
+        decoration: BoxDecoration(
+          borderRadius: BorderRadius.vertical(
+            top: Radius.circular(24),
+          ),
+          color: bgColor1,
+        ),
+        child: Container(
+          margin: EdgeInsets.all(defaultMargin),
+          child: Column(
+            children: [
+              Row(
+                children: [
+                  Expanded(
+                    child: Column(
+                      crossAxisAlignment: CrossAxisAlignment.start,
+                      children: [
+                        Text(
+                          'TERREX URBAN LOW',
+                          style: primaryTextStyle.copyWith(
+                            fontSize: 18,
+                            fontWeight: semiBold,
+                          ),
+                        ),
+                        Text(
+                          'Hiking',
+                          style: secondaryTextStyle.copyWith(
+                            fontSize: 12,
+                          ),
+                        )
+                      ],
+                    ),
+                  ),
+                  Image.asset(
+                    'assets/button_wishlist_grey.png',
+                    width: 46,
+                  ),
+                ],
+              ),
+              SizedBox(
+                height: 20,
+              ),
+              Container(
+                width: MediaQuery.of(context).size.width,
+                height: 50,
+                padding: EdgeInsets.all(16),
+                decoration: BoxDecoration(
+                  color: bgColor3,
+                  borderRadius: BorderRadius.circular(4),
+                ),
+                child: Row(
+                  mainAxisAlignment: MainAxisAlignment.spaceBetween,
+                  children: [
+                    Text(
+                      'Price starts from',
+                      style: primaryTextStyle,
+                    ),
+                    Text(
+                      '\$194,38',
+                      style: priceTextStyle.copyWith(
+                        fontSize: 16,
+                        fontWeight: semiBold,
+                      ),
+                    )
+                  ],
+                ),
+              )
+            ],
+          ),
+        ),
+      );
+    }
+
+    return Scaffold(
+      backgroundColor: bgColor6,
+      body: ListView(
+        children: [
+          header(),
+          content(),
         ],
       ),
     );
