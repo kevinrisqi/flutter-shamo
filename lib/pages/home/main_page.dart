@@ -17,16 +17,13 @@ class _MainPageState extends State<MainPage> {
 
   Widget cartButton() {
     return FloatingActionButton(
-      onPressed: () {},
+      onPressed: () {
+        Navigator.pushNamed(context, '/cart');
+      },
       backgroundColor: secondaryColor,
-      child: GestureDetector(
-        onTap: () {
-          Navigator.pushNamed(context, '/cart');
-        },
-        child: Image.asset(
-          'assets/icon_cart.png',
-          width: 20,
-        ),
+      child: Image.asset(
+        'assets/icon_cart.png',
+        width: 20,
       ),
     );
   }
