@@ -19,60 +19,71 @@ class CartPage extends StatelessWidget {
         ),
         elevation: 0,
       ),
-      body: Container(
-        width: double.infinity,
-        color: bgColor3,
-        child: Column(
-          mainAxisAlignment: MainAxisAlignment.center,
-          children: [
-            Image.asset(
-              'assets/image_cart.png',
-              width: 80,
+      body: emptyCart(),
+    );
+  }
+}
+
+class emptyCart extends StatelessWidget {
+  const emptyCart({
+    Key? key,
+  }) : super(key: key);
+
+  @override
+  Widget build(BuildContext context) {
+    return Container(
+      width: double.infinity,
+      color: bgColor3,
+      child: Column(
+        mainAxisAlignment: MainAxisAlignment.center,
+        children: [
+          Image.asset(
+            'assets/image_cart.png',
+            width: 80,
+          ),
+          SizedBox(
+            height: 20,
+          ),
+          Text(
+            'Opss! Your Cart is Empty',
+            style: primaryTextStyle.copyWith(
+              fontSize: 16,
+              fontWeight: medium,
             ),
-            SizedBox(
-              height: 20,
-            ),
-            Text(
-              'Opss! Your Cart is Empty',
-              style: primaryTextStyle.copyWith(
-                fontSize: 16,
-                fontWeight: medium,
+          ),
+          SizedBox(
+            height: 12,
+          ),
+          Text(
+            'Let\'s find your favorite shoes',
+            style: secondaryTextStyle,
+          ),
+          SizedBox(
+            height: 20,
+          ),
+          Container(
+            width: 154,
+            height: 44,
+            child: TextButton(
+              onPressed: () {
+                Navigator.pop(context);
+              },
+              style: TextButton.styleFrom(
+                backgroundColor: primaryColor,
+                shape: RoundedRectangleBorder(
+                  borderRadius: BorderRadius.circular(12),
+                ),
+              ),
+              child: Text(
+                'Explore Store',
+                style: primaryTextStyle.copyWith(
+                  fontSize: 16,
+                  fontWeight: medium,
+                ),
               ),
             ),
-            SizedBox(
-              height: 12,
-            ),
-            Text(
-              'Let\'s find your favorite shoes',
-              style: secondaryTextStyle,
-            ),
-            SizedBox(
-              height: 20,
-            ),
-            Container(
-              width: 154,
-              height: 44,
-              child: TextButton(
-                onPressed: () {
-                  Navigator.pop(context);
-                },
-                style: TextButton.styleFrom(
-                  backgroundColor: primaryColor,
-                  shape: RoundedRectangleBorder(
-                    borderRadius: BorderRadius.circular(12),
-                  ),
-                ),
-                child: Text(
-                  'Explore Store',
-                  style: primaryTextStyle.copyWith(
-                    fontSize: 16,
-                    fontWeight: medium,
-                  ),
-                ),
-              ),
-            ),
-          ],
-        ),
+          ),
+        ],
       ),
     );
   }
