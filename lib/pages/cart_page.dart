@@ -30,73 +30,87 @@ class CartPage extends StatelessWidget {
           CartCard(),
         ],
       ),
-      bottomNavigationBar: Container(
-        height: 200,
-        padding: EdgeInsets.symmetric(
-          horizontal: defaultMargin,
-        ),
-        child: Column(
-          children: [
-            Row(
-              mainAxisAlignment: MainAxisAlignment.spaceBetween,
-              children: [
-                Text(
-                  'Subtotal',
-                  style: primaryTextStyle,
+      bottomNavigationBar: bottomNavBar(),
+    );
+  }
+}
+
+class bottomNavBar extends StatelessWidget {
+  const bottomNavBar({
+    Key? key,
+  }) : super(key: key);
+
+  @override
+  Widget build(BuildContext context) {
+    return Container(
+      height: 180,
+      padding: EdgeInsets.symmetric(
+        horizontal: defaultMargin,
+      ),
+      child: Column(
+        children: [
+          Row(
+            mainAxisAlignment: MainAxisAlignment.spaceBetween,
+            children: [
+              Text(
+                'Subtotal',
+                style: primaryTextStyle,
+              ),
+              Text(
+                '\$918,48',
+                style: priceTextStyle.copyWith(
+                  fontSize: 16,
+                  fontWeight: semiBold,
                 ),
-                Text(
-                  '\$918,48',
-                  style: priceTextStyle.copyWith(
-                    fontSize: 16,
-                    fontWeight: semiBold,
+              )
+            ],
+          ),
+          SizedBox(
+            height: defaultMargin,
+          ),
+          Divider(
+            thickness: 0.3,
+            color: subtitleColor,
+          ),
+          SizedBox(
+            height: defaultMargin,
+          ),
+          TextButton(
+            onPressed: () {
+              Navigator.pushNamed(context, '/checkout');
+            },
+            style: TextButton.styleFrom(
+              backgroundColor: primaryColor,
+              shape: RoundedRectangleBorder(
+                borderRadius: BorderRadius.circular(12),
+              ),
+            ),
+            child: Container(
+              padding: EdgeInsets.only(
+                top: 5,
+                left: 20,
+                bottom: 5,
+                right: 20,
+              ),
+              child: Row(
+                mainAxisAlignment: MainAxisAlignment.spaceBetween,
+                children: [
+                  Text(
+                    'Continue to Checkout',
+                    style: primaryTextStyle.copyWith(
+                      fontSize: 16,
+                      fontWeight: semiBold,
+                    ),
                   ),
-                )
-              ],
-            ),
-            SizedBox(
-              height: defaultMargin,
-            ),
-            Divider(
-              thickness: 0.3,
-              color: subtitleColor,
-            ),
-            SizedBox(
-              height: defaultMargin,
-            ),
-            TextButton(
-              onPressed: () {},
-              style: TextButton.styleFrom(
-                backgroundColor: primaryColor,
-                shape: RoundedRectangleBorder(
-                  borderRadius: BorderRadius.circular(12),
-                ),
-              ),
-              child: Container(
-                padding: EdgeInsets.only(
-                  top: 13,
-                  left: 20,
-                  bottom: 13,
-                ),
-                child: Row(
-                  mainAxisAlignment: MainAxisAlignment.spaceBetween,
-                  children: [
-                    Text(
-                      'Continue to Checkout',
-                      style: primaryTextStyle.copyWith(
-                        fontSize: 16,
-                        fontWeight: semiBold,
-                      ),
-                    ),
-                    Icon(
-                      Icons.chevron_right,
-                      color: primaryColorText,
-                    ),
-                  ],
-                ),
+                  Icon(
+                    Icons.arrow_forward,
+                    color: primaryColorText,
+                  ),
+                ],
               ),
             ),
-          ],
-        ),
+          ),
+        ],
       ),
     );
   }
