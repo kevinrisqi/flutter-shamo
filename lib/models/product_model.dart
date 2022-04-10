@@ -7,10 +7,10 @@ class ProductModel {
   double? price;
   String? description;
   String? tags;
-  late CategoryModel category;
+  CategoryModel? category;
   DateTime? createdAt;
   DateTime? updatedAt;
-  late List<GalleryModel> galleries;
+  List<GalleryModel>? galleries;
 
   ProductModel({
     this.id,
@@ -18,10 +18,10 @@ class ProductModel {
     this.price,
     this.description,
     this.tags,
-    required this.category,
+    this.category,
     this.createdAt,
     this.updatedAt,
-    required this.galleries,
+    this.galleries,
   });
 
   ProductModel.fromJson(Map<String, dynamic> json) {
@@ -44,8 +44,8 @@ class ProductModel {
       'price': price,
       'description': description,
       'tags': tags,
-      'category': category.toJson(),
-      'galleries': galleries.map((e) => e.toJson()).toList(),
+      'category': category?.toJson(),
+      'galleries': galleries?.map((e) => e.toJson()).toList(),
       'created_at': createdAt.toString(),
       'updated_at': updatedAt.toString(),
     };

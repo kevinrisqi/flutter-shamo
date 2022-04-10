@@ -2,6 +2,7 @@ import 'package:flutter/material.dart';
 import 'package:provider/provider.dart';
 import 'package:shamo_flutter/models/user_model.dart';
 import 'package:shamo_flutter/providers/auth_provider.dart';
+import 'package:shamo_flutter/providers/product_provider.dart';
 import 'package:shamo_flutter/theme.dart';
 import 'package:shamo_flutter/widgets/product_card.dart';
 import 'package:shamo_flutter/widgets/product_tile.dart';
@@ -57,6 +58,8 @@ class popularProduct extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
+    ProductProvider productProvider = Provider.of<ProductProvider>(context);
+
     return Container(
       margin: EdgeInsets.only(
         top: 14,
@@ -65,11 +68,13 @@ class popularProduct extends StatelessWidget {
       child: SingleChildScrollView(
         scrollDirection: Axis.horizontal,
         child: Row(
-          children: [
-            ProductCard(),
-            ProductCard(),
-            ProductCard(),
-          ],
+          children: productProvider.products
+              .map(
+                (product) => ProductCard(
+                  product: product,
+                ),
+              )
+              .toList(),
         ),
       ),
     );
