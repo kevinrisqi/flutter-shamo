@@ -31,10 +31,12 @@ class ProductCard extends StatelessWidget {
           child: Column(
             crossAxisAlignment: CrossAxisAlignment.start,
             children: [
-              // Image.network(
-              //   // product!.galleries![2].url.toString(),
-              //   fit: BoxFit.cover,
-              // ),
+              Image.network(
+                product!.galleries![0].url.toString(),
+                width: 215,
+                height: 120,
+                fit: BoxFit.cover,
+              ),
               SizedBox(
                 height: defaultMargin,
               ),
@@ -54,6 +56,7 @@ class ProductCard extends StatelessWidget {
                   fontWeight: semiBold,
                 ),
                 overflow: TextOverflow.ellipsis,
+                maxLines: 1,
               ),
               SizedBox(
                 height: 6,

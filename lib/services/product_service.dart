@@ -4,7 +4,8 @@ import 'package:http/http.dart' as http;
 import 'package:shamo_flutter/models/product_model.dart';
 
 class ProductService {
-  String baseUrl = 'http://10.0.2.2:8000/api';
+  // String baseUrl = 'http://10.0.2.2:8000/api';
+  String baseUrl = 'https://shamo-backend.buildwithangga.id/api';
 
   Future<List<ProductModel>> getProduct() async {
     var url = '$baseUrl/products';

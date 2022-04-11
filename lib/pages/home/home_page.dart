@@ -32,6 +32,9 @@ class newArrivals extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
+
+    ProductProvider productProvider = Provider.of<ProductProvider>(context);
+
     return Container(
       margin: EdgeInsets.only(
         top: 14,
@@ -40,12 +43,9 @@ class newArrivals extends StatelessWidget {
         bottom: defaultMargin,
       ),
       child: Column(
-        children: [
-          ProductTile(),
-          ProductTile(),
-          ProductTile(),
-          ProductTile(),
-        ],
+        children: productProvider.products.map((product) => ProductTile(
+          product: product,
+        ),).toList(),
       ),
     );
   }
