@@ -2,7 +2,9 @@ import 'dart:ffi';
 
 import 'package:carousel_slider/carousel_slider.dart';
 import 'package:flutter/material.dart';
+import 'package:provider/provider.dart';
 import 'package:shamo_flutter/models/product_model.dart';
+import 'package:shamo_flutter/providers/wishlist_provider.dart';
 import 'package:shamo_flutter/theme.dart';
 import 'package:shamo_flutter/widgets/familiar_shoes_card.dart';
 
@@ -40,6 +42,8 @@ class _ProductPageState extends State<ProductPage> {
   Widget build(BuildContext context) {
     int index = -1;
     // int indexShoes = 0;
+
+    WishlistProvider wishlistProvider = Provider.of<WishlistProvider>(context);
 
     Future<void> showSuccessDialog() async {
       return showDialog(
@@ -235,43 +239,41 @@ class _ProductPageState extends State<ProductPage> {
                   ),
                   GestureDetector(
                     onTap: () {
-                      setState(() {
-                        isWishlist = !isWishlist;
-                        if (isWishlist) {
-                          ScaffoldMessenger.of(context).showSnackBar(
-                            SnackBar(
-                              shape: RoundedRectangleBorder(
-                                borderRadius: BorderRadius.vertical(
-                                  top: Radius.circular(12),
-                                ),
-                              ),
-                              backgroundColor: secondaryColor,
-                              content: Text(
-                                'Has been added to the Wishlist',
-                                textAlign: TextAlign.center,
+                      wishlistProvider.setProduct(widget.product!);
+                      if (wishlistProvider.isWishlist(widget.product!)) {
+                        ScaffoldMessenger.of(context).showSnackBar(
+                          SnackBar(
+                            shape: RoundedRectangleBorder(
+                              borderRadius: BorderRadius.vertical(
+                                top: Radius.circular(12),
                               ),
                             ),
-                          );
-                        } else {
-                          ScaffoldMessenger.of(context).showSnackBar(
-                            SnackBar(
-                              shape: RoundedRectangleBorder(
-                                borderRadius: BorderRadius.vertical(
-                                  top: Radius.circular(12),
-                                ),
-                              ),
-                              backgroundColor: alertColor,
-                              content: Text(
-                                'Has been removed from the Wishlist',
-                                textAlign: TextAlign.center,
+                            backgroundColor: secondaryColor,
+                            content: Text(
+                              'Has been added to the Wishlist',
+                              textAlign: TextAlign.center,
+                            ),
+                          ),
+                        );
+                      } else {
+                        ScaffoldMessenger.of(context).showSnackBar(
+                          SnackBar(
+                            shape: RoundedRectangleBorder(
+                              borderRadius: BorderRadius.vertical(
+                                top: Radius.circular(12),
                               ),
                             ),
-                          );
-                        }
-                      });
+                            backgroundColor: alertColor,
+                            content: Text(
+                              'Has been removed from the Wishlist',
+                              textAlign: TextAlign.center,
+                            ),
+                          ),
+                        );
+                      }
                     },
                     child: Image.asset(
-                      isWishlist
+                      wishlistProvider.isWishlist(widget.product!)
                           ? 'assets/button_wishlist.png'
                           : 'assets/button_wishlist_grey.png',
                       width: 46,
