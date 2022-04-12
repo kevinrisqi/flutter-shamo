@@ -1,12 +1,24 @@
 import 'package:flutter/material.dart';
+import 'package:provider/provider.dart';
+import 'package:shamo_flutter/providers/auth_provider.dart';
+import 'package:shamo_flutter/providers/cart_provider.dart';
+import 'package:shamo_flutter/providers/transaction_provider.dart';
 import 'package:shamo_flutter/theme.dart';
 import 'package:shamo_flutter/widgets/checkout_card.dart';
+import 'package:shamo_flutter/widgets/loading_button.dart';
 
-class CheckoutPage extends StatelessWidget {
+class CheckoutPage extends StatefulWidget {
   const CheckoutPage({Key? key}) : super(key: key);
 
   @override
+  State<CheckoutPage> createState() => _CheckoutPageState();
+}
+
+class _CheckoutPageState extends State<CheckoutPage> {
+  @override
   Widget build(BuildContext context) {
+    CartProvider cartProvider = Provider.of(context);
+
     return Scaffold(
       backgroundColor: bgColor3,
       appBar: AppBar(
@@ -34,8 +46,16 @@ class CheckoutPage extends StatelessWidget {
                   fontWeight: medium,
                 ),
               ),
-              CheckoutCard(),
-              CheckoutCard(),
+              Column(
+                mainAxisSize: MainAxisSize.min,
+                children: cartProvider.carts
+                    .map(
+                      (cart) => CheckoutCard(
+                        cart: cart,
+                      ),
+                    )
+                    .toList(),
+              ),
               detailAddress(),
               summaryPayment(),
               SizedBox(
@@ -57,36 +77,67 @@ class CheckoutPage extends StatelessWidget {
   }
 }
 
-class checkoutButton extends StatelessWidget {
-  const checkoutButton({
+class checkoutButton extends StatefulWidget {
+  checkoutButton({
     Key? key,
   }) : super(key: key);
 
   @override
+  State<checkoutButton> createState() => _checkoutButtonState();
+}
+
+class _checkoutButtonState extends State<checkoutButton> {
+  bool isLoading = false;
+
+  @override
   Widget build(BuildContext context) {
-    return Container(
-      width: double.infinity,
-      height: 50,
-      child: TextButton(
-        onPressed: () {
-          Navigator.pushNamedAndRemoveUntil(
-              context, '/checkout-success', (route) => false);
-        },
-        style: TextButton.styleFrom(
-          backgroundColor: primaryColor,
-          shape: RoundedRectangleBorder(
-            borderRadius: BorderRadius.circular(12),
-          ),
-        ),
-        child: Text(
-          'Checkout Now',
-          style: primaryTextStyle.copyWith(
-            fontSize: 16,
-            fontWeight: semiBold,
-          ),
-        ),
-      ),
-    );
+    CartProvider cartProvider = Provider.of<CartProvider>(context);
+    TransactionProvider transactionProvider =
+        Provider.of<TransactionProvider>(context);
+    AuthProvider authProvider = Provider.of<AuthProvider>(context);
+
+    handleCheckout() async {
+      setState(() {
+        isLoading = true;
+      });
+
+      if (await transactionProvider.checkout(
+        authProvider.user.token.toString(),
+        cartProvider.carts,
+        cartProvider.totalPrice(),
+      )) {
+        cartProvider.carts = [];
+        Navigator.pushNamedAndRemoveUntil(
+            context, '/checkout-success', (route) => false);
+      }
+
+      setState(() {
+        isLoading = false;
+      });
+    }
+
+    return isLoading
+        ? LoadingButton()
+        : Container(
+            width: double.infinity,
+            height: 50,
+            child: TextButton(
+              onPressed: handleCheckout,
+              style: TextButton.styleFrom(
+                backgroundColor: primaryColor,
+                shape: RoundedRectangleBorder(
+                  borderRadius: BorderRadius.circular(12),
+                ),
+              ),
+              child: Text(
+                'Checkout Now',
+                style: primaryTextStyle.copyWith(
+                  fontSize: 16,
+                  fontWeight: semiBold,
+                ),
+              ),
+            ),
+          );
   }
 }
 
@@ -97,6 +148,8 @@ class summaryPayment extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
+    CartProvider cartProvider = Provider.of<CartProvider>(context);
+
     return Container(
       width: double.infinity,
       padding: EdgeInsets.all(20),
@@ -130,7 +183,7 @@ class summaryPayment extends StatelessWidget {
                 ),
               ),
               Text(
-                '2 Items',
+                '${cartProvider.totalItems()} Items',
                 style: primaryTextStyle.copyWith(
                   fontWeight: medium,
                 ),
@@ -150,7 +203,7 @@ class summaryPayment extends StatelessWidget {
                 ),
               ),
               Text(
-                '\$72,33',
+                '\$${cartProvider.totalPrice()}',
                 style: primaryTextStyle.copyWith(
                   fontWeight: medium,
                 ),
@@ -198,7 +251,7 @@ class summaryPayment extends StatelessWidget {
                 ),
               ),
               Text(
-                '\$144,66',
+                '\$${cartProvider.totalPrice()}',
                 style: priceTextStyle.copyWith(
                   fontWeight: semiBold,
                 ),
