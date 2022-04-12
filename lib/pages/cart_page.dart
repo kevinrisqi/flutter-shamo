@@ -1,4 +1,6 @@
 import 'package:flutter/material.dart';
+import 'package:provider/provider.dart';
+import 'package:shamo_flutter/providers/cart_provider.dart';
 import 'package:shamo_flutter/theme.dart';
 import 'package:shamo_flutter/widgets/cart_card.dart';
 
@@ -7,6 +9,8 @@ class CartPage extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
+    CartProvider cartProvider = Provider.of<CartProvider>(context);
+
     return Scaffold(
       backgroundColor: bgColor3,
       appBar: AppBar(
@@ -22,15 +26,19 @@ class CartPage extends StatelessWidget {
         elevation: 0,
       ),
       // body: emptyCart(),
-      body: ListView(
+      body: cartProvider.carts.length == 0 ? emptyCart() :  ListView(
         padding: EdgeInsets.symmetric(
           horizontal: defaultMargin,
         ),
-        children: [
-          CartCard(),
-        ],
+        children: cartProvider.carts
+            .map(
+              (cart) => CartCard(
+                cart: cart,
+              ),
+            )
+            .toList(),
       ),
-      bottomNavigationBar: bottomNavBar(),
+      bottomNavigationBar:cartProvider.carts.length == 0 ? SizedBox() : bottomNavBar(),
     );
   }
 }
@@ -42,6 +50,8 @@ class bottomNavBar extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
+    CartProvider cartProvider = Provider.of<CartProvider>(context);
+
     return Container(
       height: 180,
       padding: EdgeInsets.symmetric(
@@ -57,7 +67,7 @@ class bottomNavBar extends StatelessWidget {
                 style: primaryTextStyle,
               ),
               Text(
-                '\$918,48',
+                '\$${cartProvider.totalPrice()}',
                 style: priceTextStyle.copyWith(
                   fontSize: 16,
                   fontWeight: semiBold,

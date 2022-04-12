@@ -4,6 +4,7 @@ import 'package:carousel_slider/carousel_slider.dart';
 import 'package:flutter/material.dart';
 import 'package:provider/provider.dart';
 import 'package:shamo_flutter/models/product_model.dart';
+import 'package:shamo_flutter/providers/cart_provider.dart';
 import 'package:shamo_flutter/providers/wishlist_provider.dart';
 import 'package:shamo_flutter/theme.dart';
 import 'package:shamo_flutter/widgets/familiar_shoes_card.dart';
@@ -44,6 +45,8 @@ class _ProductPageState extends State<ProductPage> {
     // int indexShoes = 0;
 
     WishlistProvider wishlistProvider = Provider.of<WishlistProvider>(context);
+
+    CartProvider cartProvider = Provider.of<CartProvider>(context);
 
     Future<void> showSuccessDialog() async {
       return showDialog(
@@ -99,7 +102,9 @@ class _ProductPageState extends State<ProductPage> {
                         MediaQuery.of(context).size.width - 8 * defaultMargin,
                     height: 44,
                     child: TextButton(
-                      onPressed: () {},
+                      onPressed: () {
+                        Navigator.popAndPushNamed(context, '/cart');
+                      },
                       style: TextButton.styleFrom(
                         backgroundColor: primaryColor,
                         shape: RoundedRectangleBorder(
@@ -373,6 +378,7 @@ class _ProductPageState extends State<ProductPage> {
                       height: 54,
                       child: TextButton(
                         onPressed: () {
+                          cartProvider.addCart(widget.product!);
                           showSuccessDialog();
                         },
                         style: TextButton.styleFrom(
